@@ -1,5 +1,6 @@
 import unittest
 from customer import Customer
+from coins import Dime
 
 class TestGetWalletCoin(unittest.TestCase):
     """Initail Customer Class for get_wallet_coin Method() testing"""
@@ -31,6 +32,32 @@ class TestGetWalletCoin(unittest.TestCase):
         result = self.customer.get_wallet_coin("deeme")
         self.assertIsNone(result)
 
+class TestAddCoinsToWallet(unittest.TestCase):
+    """Tests for Customers add_coins_to_wallet method"""
+
+    def setUp(self):
+        self.customer = Customer()
+
+    def test_length_of_money_list_adding(self):
+        dime_1 = Dime()
+        dime_2 = Dime()
+        dime_3 = Dime()
+        coins_list = [dime_1, dime_2, dime_3]
+        coins_list_length = len(self.customer.wallet.money)
+
+        self.customer.add_coins_to_wallet(coins_list)
+        method_list = self.customer.wallet.money
+        
+        self.assertEqual((coins_list_length + 3), len(method_list))
+
+    def test_length_of_money_list_not_changing(self):
+        coins_list = []
+        coins_list_length = len(self.customer.wallet.money)
+
+        self.customer.add_coins_to_wallet(coins_list)
+        method_list = self.customer.wallet.money
+
+        self.assertEqual((coins_list_length), len(method_list))
 
 if __name__ == '__main__':
     unittest.main()
